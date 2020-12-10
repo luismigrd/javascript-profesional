@@ -1,0 +1,74 @@
+<html>
+  <head>
+    <title>PlatziMediaPlayer.js</title>
+    <link
+      rel="stylesheet"
+      href="https://necolas.github.io/normalize.css/8.0.1/normalize.css"
+    />
+    <link rel="stylesheet" href="./assets/index.css" />
+  </head>
+
+  <body>
+    <header>
+      <h1>PlatziMediaPlayer.js</h1>
+      <p>An extensible media player.</p>
+    </header>
+
+    <main class="container">
+      <video class="movie">
+        <source src="./assets/ejercicio.mp4" />
+      </video>
+
+      <button>Play/Pause</button>
+    </main>
+
+    <script>
+      const video = document.querySelector("video")
+      const button = document.querySelector("button")
+
+      //#region Clase MediaPlayer
+
+      //pasaremos un objeto de configuracion, y que en ese objeto leamos cual es el elemento quye representa el media
+      function MediaPlayer(config){
+        //this representa a la clase
+        //"media" es un atributo de la clase "MediaPlayer"
+        //"el" es el nombre que tendra el atributo de la configuracion que le inyectaremos (esto para este caso tiene que inyectar un video)
+        this.media = config.el;
+        this.estaPausado = true;
+      }
+
+      //"play" es un metodo de "MediaPlayer", ese metodo lo estams agregando a la clase "MediaPlayer" usando el metodo "prototype"
+      //seguido a eso definimos que hara el metodo "play": tomara el elemento "video" del DOM y le dara play
+      MediaPlayer.prototype.play = function(){
+        // video.play();
+        this.media.play();
+      }
+      MediaPlayer.prototype.pause = function(){
+        this.media.pause();
+      }
+
+      //#endregion
+
+      //instanciamos para poder usar el metodo "play" de la clase "MediaPlayer" y lo asignamos a una constante llamada "player"
+      //la clase "MediaPlayer" recibe un objeto de configuracion
+      const player = new MediaPlayer({ el: video });
+      //el metodo en accion
+      // button.onclick = () => player.play();
+      button.onclick = () => {
+        if (player.estaPausado) {
+          player.play();
+          console.log(player.estaPausado);
+          player.estaPausado = false;
+        }
+        else {
+          player.pause();
+          console.log(player.estaPausado);
+          player.estaPausado = true;
+        }
+      }
+
+      //forma simple de darle play al video usando un boton
+      // button.onclick = () => video.play();
+    </script>
+  </body>
+</html>
